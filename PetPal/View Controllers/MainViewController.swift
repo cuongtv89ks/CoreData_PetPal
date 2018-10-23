@@ -84,6 +84,7 @@ class MainViewController: UIViewController {
 		let data = FriendData()
         let friend = Friend(entity: Friend.entity(), insertInto: context)
         friend.name = data.name
+        friend.address = data.address
         appDelegate.saveContext()
         
 		friends.append(friend)
@@ -110,6 +111,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as! FriendCell
 		let friend = isFiltered ? filtered[indexPath.row] : friends[indexPath.row]
 		cell.nameLabel.text = friend.name
+        cell.addressLabel.text = friend.address
 		if let image = images[friend.name!] {
 			cell.pictureImageView.image = image
 		}
