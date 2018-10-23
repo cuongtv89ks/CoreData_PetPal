@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0150455F217F56E000511936 /* PetPal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0150455D217F56E000511936 /* PetPal.xcdatamodeld */; };
+		01504562217F584E00511936 /* Friend+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01504560217F584E00511936 /* Friend+CoreDataClass.swift */; };
+		01504563217F584E00511936 /* Friend+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01504561217F584E00511936 /* Friend+CoreDataProperties.swift */; };
 		DD6B333C1F56DAD800F4C248 /* PetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6B333B1F56DAD800F4C248 /* PetsViewController.swift */; };
 		DD6B33401F56E05F00F4C248 /* FriendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6B333F1F56E05F00F4C248 /* FriendData.swift */; };
 		DD6B33421F56E1A900F4C248 /* PetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6B33411F56E1A900F4C248 /* PetData.swift */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0150455E217F56E000511936 /* PetPal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetPal.xcdatamodel; sourceTree = "<group>"; };
+		01504560217F584E00511936 /* Friend+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataClass.swift"; sourceTree = "<group>"; };
+		01504561217F584E00511936 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DD6B333B1F56DAD800F4C248 /* PetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewController.swift; sourceTree = "<group>"; };
 		DD6B333F1F56E05F00F4C248 /* FriendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendData.swift; sourceTree = "<group>"; };
 		DD6B33411F56E1A900F4C248 /* PetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetData.swift; sourceTree = "<group>"; };
@@ -57,6 +63,7 @@
 				DD952D681F56D8AA00AF81B8 /* Main.storyboard */,
 				DD952D6B1F56D8AA00AF81B8 /* Assets.xcassets */,
 				DD952D6D1F56D8AA00AF81B8 /* LaunchScreen.storyboard */,
+				0150455D217F56E000511936 /* PetPal.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -113,6 +120,8 @@
 		DD952D771F56D94300AF81B8 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				01504560217F584E00511936 /* Friend+CoreDataClass.swift */,
+				01504561217F584E00511936 /* Friend+CoreDataProperties.swift */,
 				DD6B333F1F56E05F00F4C248 /* FriendData.swift */,
 				DD6B33411F56E1A900F4C248 /* PetData.swift */,
 			);
@@ -201,9 +210,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0150455F217F56E000511936 /* PetPal.xcdatamodeld in Sources */,
+				01504562217F584E00511936 /* Friend+CoreDataClass.swift in Sources */,
 				DD952D671F56D8AA00AF81B8 /* MainViewController.swift in Sources */,
 				DD6B33441F56EC2400F4C248 /* FriendCell.swift in Sources */,
 				DD6B333C1F56DAD800F4C248 /* PetsViewController.swift in Sources */,
+				01504563217F584E00511936 /* Friend+CoreDataProperties.swift in Sources */,
 				DD719FFB1F578F96008392C8 /* Array+Extensions.swift in Sources */,
 				DD952D651F56D8AA00AF81B8 /* AppDelegate.swift in Sources */,
 				DDB438961F579FDB0078BBAD /* Int+Extension.swift in Sources */,
@@ -352,7 +364,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FA2KHM6C4N;
+				DEVELOPMENT_TEAM = ATA9D86TU9;
 				INFOPLIST_FILE = PetPal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.PetPal;
@@ -367,7 +379,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FA2KHM6C4N;
+				DEVELOPMENT_TEAM = ATA9D86TU9;
 				INFOPLIST_FILE = PetPal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.PetPal;
@@ -399,6 +411,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0150455D217F56E000511936 /* PetPal.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0150455E217F56E000511936 /* PetPal.xcdatamodel */,
+			);
+			currentVersion = 0150455E217F56E000511936 /* PetPal.xcdatamodel */;
+			path = PetPal.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DD952D591F56D8AA00AF81B8 /* Project object */;
 }

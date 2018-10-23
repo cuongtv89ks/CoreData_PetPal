@@ -33,8 +33,11 @@ import UIKit
 class MainViewController: UIViewController {
 	@IBOutlet private weak var collectionView:UICollectionView!
 	
-	private var friends = [String]()
-	private var filtered = [String]()
+    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+	private var friends = [Friend]()
+	private var filtered = [Friend]()
 	private var isFiltered = false
 	private var friendPets = [String:[String]]()
 	private var selected:IndexPath!
@@ -45,6 +48,15 @@ class MainViewController: UIViewController {
 		super.viewDidLoad()
 		picker.delegate = self
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        do {
+            friends = try context.fetch(Friend.fetchRequest())
+        } catch let error as NSError {
+            print("Cound not fetch. \(error), \(error.userInfo)")
+        }
+    }
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -57,11 +69,11 @@ class MainViewController: UIViewController {
 			if let index = sender as? IndexPath {
 				let pvc = segue.destination as! PetsViewController
 				let friend = friends[index.row]
-				if let pets = friendPets[friend] {
+				if let pets = friendPets[friend.name!] {
 					pvc.pets = pets
 				}
 				pvc.petAdded = {
-					self.friendPets[friend] = pvc.pets
+					self.friendPets[friend.name!] = pvc.pets
 				}
 			}
 		}
@@ -69,11 +81,12 @@ class MainViewController: UIViewController {
 
 	// MARK:- Actions
 	@IBAction func addFriend() {
-		var friend = FriendData()
-		while friends.contains(friend.name) {
-			friend = FriendData()
-		}
-		friends.append(friend.name)
+		let data = FriendData()
+        let friend = Friend(entity: Friend.entity(), insertInto: context)
+        friend.name = data.name
+        appDelegate.saveContext()
+        
+		friends.append(friend)
 		let index = IndexPath(row:friends.count - 1, section:0)
 		collectionView?.insertItems(at: [index])
 	}
@@ -96,8 +109,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as! FriendCell
 		let friend = isFiltered ? filtered[indexPath.row] : friends[indexPath.row]
-		cell.nameLabel.text = friend
-		if let image = images[friend] {
+		cell.nameLabel.text = friend.name
+		if let image = images[friend.name!] {
 			cell.pictureImageView.image = image
 		}
 		return cell
@@ -120,8 +133,8 @@ extension MainViewController:UISearchBarDelegate {
 			return
 		}
 		isFiltered = true
-		filtered = friends.filter({(txt) -> Bool in
-			return txt.contains(query)
+		filtered = friends.filter({(friend) -> Bool in
+            return friend.name!.contains(query)
 		})
 		searchBar.resignFirstResponder()
 		collectionView.reloadData()
@@ -144,7 +157,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
 		let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
 		let friend = isFiltered ? filtered[selected.row] : friends[selected.row]
-		images[friend] = image
+		images[friend.name!] = image
 		collectionView?.reloadItems(at: [selected])
 		picker.dismiss(animated: true, completion: nil)
 	}
