@@ -42,7 +42,6 @@ class MainViewController: UIViewController {
 	private var friendPets = [String:[String]]()
 	private var selected:IndexPath!
 	private var picker = UIImagePickerController()
-	private var images = [String:UIImage]()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -56,6 +55,7 @@ class MainViewController: UIViewController {
         } catch let error as NSError {
             print("Cound not fetch. \(error), \(error.userInfo)")
         }
+        showEditButton()
     }
 
 	override func didReceiveMemoryWarning() {
@@ -83,8 +83,12 @@ class MainViewController: UIViewController {
 	@IBAction func addFriend() {
 		let data = FriendData()
         let friend = Friend(entity: Friend.entity(), insertInto: context)
+        
         friend.name = data.name
         friend.address = data.address
+        friend.dob = data.dob as NSDate
+        friend.eyeColor = data.eyeColor
+        
         appDelegate.saveContext()
         
 		friends.append(friend)
@@ -112,9 +116,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 		let friend = isFiltered ? filtered[indexPath.row] : friends[indexPath.row]
 		cell.nameLabel.text = friend.name
         cell.addressLabel.text = friend.address
-		if let image = images[friend.name!] {
-			cell.pictureImageView.image = image
-		}
+        cell.ageLabel.text = "Age: \(friend.age)"
+        cell.eyeColorView.backgroundColor = friend.eyeColor as? UIColor
+		if let image = friend.photo as Data? {
+            cell.pictureImageView.image = UIImage(data: image)
+        } else {
+            cell.pictureImageView.image = UIImage(named: "person-placeholder")
+        }
 		return cell
 	}
 	
@@ -159,7 +167,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
 		let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
 		let friend = isFiltered ? filtered[selected.row] : friends[selected.row]
-		images[friend.name!] = image
+        friend.photo = image.pngData() as NSData?
+        appDelegate.saveContext()
 		collectionView?.reloadItems(at: [selected])
 		picker.dismiss(animated: true, completion: nil)
 	}

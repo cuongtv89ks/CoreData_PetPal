@@ -2,7 +2,7 @@
 //  Friend+CoreDataProperties.swift
 //  PetPal
 //
-//  Created by Olive Union on 23/10/2018.
+//  Created by Olive Union on 24/10/2018.
 //  Copyright © 2018 Razeware. All rights reserved.
 //
 //
@@ -17,7 +17,10 @@ extension Friend {
         return NSFetchRequest<Friend>(entityName: "Friend")
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var address: String?
+    @NSManaged public var dob: NSDate?
+    @NSManaged public var eyeColor: NSObject?
+    @NSManaged public var name: String?
+    @NSManaged public var photo: NSData?
 
 }
