@@ -37,7 +37,8 @@ class MainViewController: UIViewController {
     private let appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-	private var friends = [Friend]()
+	//private var friends = [Friend]()
+    private var fetchedRC: NSFetchedResultsController<Friend>!
 	private var filtered = [Friend]()
 	private var isFiltered = false
 	private var friendPets = [String:[String]]()
@@ -66,7 +67,7 @@ class MainViewController: UIViewController {
 		if segue.identifier == "petSegue" {
 			if let index = sender as? IndexPath {
 				let pvc = segue.destination as! PetsViewController
-				let friend = friends[index.row]
+                let friend = fetchedRC.object(at: index)
 				if let pets = friendPets[friend.name!] {
 					pvc.pets = pets
 				}
@@ -95,7 +96,10 @@ class MainViewController: UIViewController {
 	
 	// MARK:- Private Methods
 	private func showEditButton() {
-		if friends.count > 0 {
+        guard let objs = fetchedRC.fetchedObjects else {
+            return
+        }
+		if objs.count > 0 {
 			navigationItem.leftBarButtonItem = editButtonItem
 		}
 	}
@@ -109,7 +113,9 @@ class MainViewController: UIViewController {
         request.sortDescriptors = [sort]
         
         do {
-            friends = try context.fetch(request)
+            //friends = try context.fetch(request)
+            fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            try fetchedRC.performFetch()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -119,13 +125,13 @@ class MainViewController: UIViewController {
 // Collection View Delegates
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let count = isFiltered ? filtered.count : friends.count
+		let count = fetchedRC.fetchedObjects?.count ?? 0
 		return count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as! FriendCell
-		let friend = isFiltered ? filtered[indexPath.row] : friends[indexPath.row]
+		let friend = fetchedRC.object(at: indexPath)
 		cell.nameLabel.text = friend.name
         cell.addressLabel.text = friend.address
         cell.ageLabel.text = "Age: \(friend.age)"
@@ -168,7 +174,7 @@ extension MainViewController:UISearchBarDelegate {
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		//isFiltered = false
 		//filtered.removeAll()
-        query = "" 
+        query = ""
 		searchBar.text = nil
 		searchBar.resignFirstResponder()
         refresh()
@@ -183,7 +189,7 @@ extension MainViewController: UIImagePickerControllerDelegate, UINavigationContr
 let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
 		let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as! UIImage
-		let friend = isFiltered ? filtered[selected.row] : friends[selected.row]
+		let friend = fetchedRC.object(at: selected)
         friend.photo = image.pngData() as NSData?
         appDelegate.saveContext()
 		collectionView?.reloadItems(at: [selected])
