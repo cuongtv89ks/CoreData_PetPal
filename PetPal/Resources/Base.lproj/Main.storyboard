@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jvW-sG-dVG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jvW-sG-dVG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,13 +33,13 @@
                                 <color key="backgroundColor" red="0.0" green="0.40784313729999999" blue="0.2156862745" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="5" id="t6b-CH-oUp">
                                     <size key="itemSize" width="155" height="255"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="375" height="36"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="15" maxX="20" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="15" maxX="20" maxY="15"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FriendCell" id="kby-g8-AAG" customClass="FriendCell" customModule="PetPal" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="15" width="155" height="255"/>
+                                        <rect key="frame" x="20" y="51" width="155" height="255"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="155" height="255"/>
@@ -109,6 +109,24 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="HeaderRow" id="KXq-ET-8aP">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="36"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4E-aw-ILz">
+                                            <rect key="frame" x="8" y="8.5" width="359" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="a4E-aw-ILz" firstAttribute="centerY" secondItem="KXq-ET-8aP" secondAttribute="centerY" id="4t1-nK-N7c"/>
+                                        <constraint firstAttribute="trailing" secondItem="a4E-aw-ILz" secondAttribute="trailing" constant="8" id="OhV-YI-3BI"/>
+                                        <constraint firstItem="a4E-aw-ILz" firstAttribute="leading" secondItem="KXq-ET-8aP" secondAttribute="leading" constant="8" id="uDi-01-gx9"/>
+                                    </constraints>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="QhV-H5-8Pu" id="W5B-IU-8QU"/>
                                     <outlet property="delegate" destination="QhV-H5-8Pu" id="Era-HP-gmA"/>
@@ -278,7 +296,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person-placeholder" width="300" height="275"/>
+        <image name="person-placeholder" width="72" height="66"/>
         <image name="pet-placeholder" width="150" height="150"/>
     </resources>
 </document>
